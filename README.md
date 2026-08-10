@@ -46,9 +46,22 @@ const DELETION_BATCH_SIZE = 3            // Comments per batch
 const DELAY_BETWEEN_ACTIONS_MS = 1000    // Pause between major steps (1s)
 const DELAY_BETWEEN_CHECKBOX_CLICKS_MS = 300  // Pause between checking boxes
 const MAX_RETRIES = 60                   // How long to wait for page loads (60s)
+const RATE_LIMIT_COOLDOWN_MS = 30000     // Cooldown when rate limited (30s)
+const MAX_CONSECUTIVE_ERRORS = 3         // Bail after 3 consecutive failures
 ```
 
 Smaller batches and longer delays = safer but slower. The defaults are conservative.
+
+## Rate limiting
+
+Instagram will eventually show "something went wrong" if you delete too many comments too fast. The script handles this three ways:
+
+1. **Error detection** — checks the page text for Instagram's error messages before each batch
+2. **Auto-cooldown** — pauses for 30 seconds when an error is detected, then retries
+3. **Periodic pauses** — adds a 3-second delay every 50 batches
+4. **Graceful bail** — stops after 3 consecutive failures and logs how far it got
+
+If the script stops due to rate limiting, wait a few minutes and run it again. It picks up where it left off (deleting whatever comments remain).
 
 ## How it works
 
