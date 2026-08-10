@@ -1,6 +1,6 @@
 # Running headless (no browser window needed)
 
-The console script requires a live browser tab. If you want to run it on a server or just don't want to keep a browser window open, you can use Chrome Remote Debugging and the Chrome DevTools Protocol (CDP) to inject the script programmatically.
+The console script requires a live browser tab. If you want to run it unattended — e.g., as part of an automated digital hygiene routine — you can drive Chrome via the DevTools Protocol.
 
 ## Quick start
 
@@ -39,7 +39,7 @@ async def inject():
 
     async with websockets.connect(ig["webSocketDebuggerUrl"]) as ws:
         # Read the script from file
-        with open("instagram-comment-activity-deleter.js") as f:
+        with open("ig-sanitize.js") as f:
             script = f.read()
 
         await ws.send(json.dumps({

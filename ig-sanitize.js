@@ -1,9 +1,8 @@
 /**
- * Instagram Comment Activity Deleter
+ * IG Sanitize — Comment History Deleter
  *
- * Deletes your own comments from Instagram's "Your Activity" page in batches.
- * Works by automating the same clicks you'd do manually: Select, check boxes,
- * Delete, confirm. Runs in a loop until all comments are gone.
+ * Bulk-deletes your Instagram comments from the "Your Activity" page.
+ * Part of a digital hygiene / OSINT footprint reduction toolkit.
  *
  * Based on original script by sbolel (https://gist.github.com/sbolel/a2b2bfde16b3ab185fbc2e2049240abc)
  * Fixed and updated for current Instagram DOM structure (Aug 2026).
