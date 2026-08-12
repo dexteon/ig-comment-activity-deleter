@@ -21,6 +21,8 @@ This script targets the one category Instagram actually lets you bulk-delete: co
 
 ## How to use
 
+**Option A: Console paste (simple)**
+
 1. Go to **https://www.instagram.com/your_activity/interactions/comments/** (log in first)
 2. Open your browser's developer console:
    - **Chrome/Edge:** `Ctrl+Shift+J` (Windows) or `Cmd+Option+J` (Mac)
@@ -28,6 +30,29 @@ This script targets the one category Instagram actually lets you bulk-delete: co
 3. Copy the entire contents of [`ig-sanitize.js`](ig-sanitize.js)
 4. Paste it into the console and press **Enter**
 5. Leave the tab open. The script logs progress as it works.
+
+**Option B: Python CDP runner (recommended for large histories)**
+
+If you have hundreds or thousands of comments, the Python runner is more reliable. It controls the deletion loop from outside the browser, so it can reload pages, handle rate limits, and resume where it left off across restarts.
+
+```bash
+pip install websockets
+
+# Launch Chrome with remote debugging (close Chrome first)
+# Windows:
+Start-Process chrome -ArgumentList '--remote-debugging-port=9222', \
+    '--user-data-dir=C:\Users\<you>\AppData\Local\Google\Chrome\User Data', \
+    'https://www.instagram.com/your_activity/interactions/comments/'
+
+# macOS:
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+    --remote-debugging-port=9222 \
+    'https://www.instagram.com/your_activity/interactions/comments/'
+
+python ig-sanitize-runner.py
+```
+
+Progress saves to localStorage after every 10 batches. If the script dies (rate limit, browser crash, power outage), just rerun it and it picks up where it left off.
 
 ```
 Batch 1 deleted (~3 comments total)
@@ -54,14 +79,16 @@ Smaller batches and longer delays = safer but slower. The defaults are conservat
 
 ## Rate limiting
 
-Instagram will eventually show "something went wrong" if you delete too many comments too fast. The script handles this three ways:
+Instagram will eventually show "something went wrong" if you delete too many comments too fast. The script handles this:
 
 1. **Error detection** — checks the page text for Instagram's error messages before each batch
 2. **Auto-cooldown** — pauses for 30 seconds when an error is detected, then retries
 3. **Periodic pauses** — adds a 3-second delay every 50 batches
-4. **Graceful bail** — stops after 3 consecutive failures and logs how far it got
+4. **Graceful bail** — stops after consecutive failures and logs how far it got
 
-If the script stops due to rate limiting, wait a few minutes and run it again. It picks up where it left off (deleting whatever comments remain).
+In practice, Instagram starts throttling around 1,000-1,200 deletions in a single session. The page stops loading comments entirely until the throttle clears (usually a few hours). This is an account-level rate limit, not something the script can bypass.
+
+If the script stops, wait a few hours and run it again. It picks up where it left off.
 
 ## How it works
 
@@ -95,11 +122,14 @@ If you've commented publicly for years, assume some of that data has already bee
 
 ## Roadmap
 
-- [x] Comment deletion (this repo)
+- [x] Comment deletion (this repo, tested on 1,700+ comments)
+- [x] Rate limit detection and auto-cooldown
+- [x] Python CDP runner with resume support
+- [x] Console paste version with rate limit handling
 - [ ] Like removal (`/your_activity/interactions/likes/`)
 - [ ] Story reply deletion (`/your_activity/interactions/story_replies/`)
 - [ ] Search history clearing (`/your_activity/search_history/`)
-- [ ] Headless automation script (cron-able, Docker-ready)
+- [ ] Docker container for headless cron runs
 
 ## Things that could break it
 
