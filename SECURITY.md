@@ -17,4 +17,4 @@ Please do not open a public issue for security vulnerabilities.
 
 ## Scope
 
-This policy applies to all repos under the DexTeon account.
+This policy applies to every repository CyberAutomations publishes on GitHub.

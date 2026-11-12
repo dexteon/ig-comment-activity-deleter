@@ -1,6 +1,6 @@
 # Running headless (no browser window needed)
 
-The console script requires a live browser tab. If you want to run it unattended — e.g., as part of an automated digital hygiene routine — you can drive Chrome via the DevTools Protocol.
+The console script requires a live browser tab. If you want to run it unattended, e.g., as part of an automated digital hygiene routine, you can drive Chrome via the DevTools Protocol.
 
 ## Quick start
 
@@ -78,7 +78,7 @@ async def check():
 asyncio.run(check())
 ```
 
-Note: the console-paste version of the script uses `console.log` for progress. If you want to poll status via CDP like the example above, add `window.__igDone` and `window.__igBatches` globals to the script (the headless version we used internally does this — see the repo's commit history for reference).
+Note: the console-paste version of the script uses `console.log` for progress. If you want to poll status via CDP like the example above, add `window.__igDone` and `window.__igBatches` globals to the script (the headless version we used internally does this, see the repo's commit history for reference).
 
 ### 4. Optional: Docker
 

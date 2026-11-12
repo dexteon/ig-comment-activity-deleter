@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-IG Sanitize — CDP Runner
+IG Sanitize: CDP Runner
 
 Drives the comment deletion loop from Python via the Chrome DevTools Protocol.
 More reliable than the console script for large deletions because Python controls

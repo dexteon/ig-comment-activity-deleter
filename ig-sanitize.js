@@ -1,5 +1,5 @@
 /**
- * IG Sanitize — Comment History Deleter
+ * IG Sanitize: Comment History Deleter
  *
  * Bulk-deletes your Instagram comments from the "Your Activity" page.
  * Part of a digital hygiene / OSINT footprint reduction toolkit.

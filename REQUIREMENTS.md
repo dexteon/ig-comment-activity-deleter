@@ -16,8 +16,8 @@ If you're using the headless approach described in [`headless.md`](headless.md),
 
 ## Browser compatibility
 
-Tested on Chrome 151. Should work on any modern Chromium-based browser (Edge, Brave, Vivaldi). Firefox and Safari may work but are untested — the DOM selectors may differ.
+Tested on Chrome 151. Should work on any modern Chromium-based browser (Edge, Brave, Vivaldi). Firefox and Safari may work but are untested, the DOM selectors may differ.
 
 ## Instagram session
 
-You need an active Instagram session (logged in). The script doesn't handle authentication — it assumes you're already on the comments activity page with your comments loaded.
+You need an active Instagram session (logged in). The script doesn't handle authentication, it assumes you're already on the comments activity page with your comments loaded.
